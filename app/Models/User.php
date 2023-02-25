@@ -25,6 +25,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
     ];
 
     /**
@@ -45,4 +46,9 @@ class User extends Authenticatable
         'createdAt' => 'datetime',
         'updatedAt' => 'datetime',
     ];
+
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class, 'userId');
+    }
 }

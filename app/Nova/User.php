@@ -5,6 +5,7 @@ namespace App\Nova;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -46,57 +47,48 @@ class User extends Resource
         return [
             Avatar::make('Avatar')
                 ->thumbnail(fn()=>$this->avatar)
-                ->showOnIndex()
-                ->hideFromDetail()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
-            Avatar::make('Avatar')
                 ->preview(fn()=>$this->avatar)
-                ->squared()
-                ->hideFromIndex()
+                ->textAlign('left')
                 ->disableDownload(),
+
             Text::make('Name')
                 ->sortable()
                 ->required(),
-            ID::make(),
-            Select::make('Rank', 'rank')->options([
-                'USER', 'VIP', 'ADMIN'
-            ])
+
+            ID::make('ID', 'id')
+                ->placeholder('Users Discord ID')
+                ->required(),
+
+            Text::make('Active Profile', 'activeProfile'),
+
+            Select::make('Rank', 'rank')
+                ->options([
+                    'USER', 'VIP', 'ADMIN'
+                ])
                 ->hideFromIndex()
                 ->hideFromDetail()
                 ->required(),
-            Badge::make('Rank', 'rank')->map([
-                'USER' => 'info',
-                'VIP' => 'success',
-                'ADMIN' => 'warning',
-            ])
+
+            Badge::make('Rank', 'rank')
+                ->map([
+                    'USER' => 'info',
+                    'VIP' => 'success',
+                    'ADMIN' => 'warning',
+                ])
                 ->sortable()
                 ->required(),
+
             DateTime::make('Updated At', 'updatedAt')
                 ->displayUsing(fn ($value) => $value ? $value->format('D d/m/Y, g:ia') : '')
                 ->hideFromIndex()
                 ->sortable(),
+
             DateTime::make('Created At', 'createdAt')
                 ->displayUsing(fn ($value) => $value ? $value->format('D d/m/Y, g:ia') : '')
                 ->sortable(),
 
+            HasMany::make('Profiles', 'profiles' )
 
-//            Gravatar::make()->maxWidth(50),
-//
-//            Text::make('Name')
-//                ->sortable()
-//                ->rules('required', 'max:255'),
-//
-//            Text::make('Email')
-//                ->sortable()
-//                ->rules('required', 'email', 'max:254')
-//                ->creationRules('unique:users,email')
-//                ->updateRules('unique:users,email,{{resourceId}}'),
-//
-//            Password::make('Password')
-//                ->onlyOnForms()
-//                ->creationRules('required', Rules\Password::defaults())
-//                ->updateRules('nullable', Rules\Password::defaults()),
         ];
     }
 
