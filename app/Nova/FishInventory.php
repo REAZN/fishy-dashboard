@@ -9,21 +9,21 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Stat extends Resource
+class FishInventory extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Stat>
+     * @var class-string<\App\Models\FishInventory>
      */
-    public static $model = \App\Models\Stat::class;
+    public static $model = \App\Models\FishInventory::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'uuid';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -45,11 +45,11 @@ class Stat extends Resource
         return [
             BelongsTo::make('Profile', 'profile', Profile::class),
 
-            Text::make('Stat ID', 'id')
+            Text::make('Fish ID', 'id')
                 ->sortable()
                 ->required(),
 
-            Number::make('Value', 'value')
+            Number::make('Amount', 'amount')
                 ->sortable()
                 ->textAlign('left')
                 ->required(),

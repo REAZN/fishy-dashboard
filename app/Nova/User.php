@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\NewUsers;
+use App\Nova\Metrics\NewUsersTrend;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\DateTime;
@@ -100,7 +102,10 @@ class User extends Resource
      */
     public function cards(NovaRequest $request)
     {
-        return [];
+        return [
+            new NewUsers(),
+            new NewUsersTrend()
+        ];
     }
 
     /**

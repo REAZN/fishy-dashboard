@@ -3,7 +3,10 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -47,19 +50,34 @@ class Profile extends Resource
             Text::make('Profile Name', 'name')
                 ->required(),
 
-            ID::make()->sortable(),
+            ID::make('Profile ID', 'id')->sortable(),
 
-            Text::make('Balance', 'balance', function () {
-                return !is_null($this->balance) ? '$' . number_format($this->balance, 0, '.', ',') : '$0';
-            })
+//            Text::make('Balance', 'balance')
+//                ->sortable(),
+
+            Number::make('Balance', 'balance')
                 ->sortable(),
 
-            Text::make('XP', 'xp', function () {
-                return !is_null($this->xp) ? number_format($this->xp, 0, '.', ',') : 0;
-            })
+            Number::make('XP', 'xp')
                 ->sortable(),
+
+//            Number::make('XP', 'xp', function () {
+//                return !is_null($this->xp) ? number_format($this->xp, 0, '.', ',') : 0;
+//            })
+//                ->sortable(),
+//        Number::make('XP', 'xp', function () {
+//                return !is_null($this->xp) ? number_format($this->xp, 0, '.', ',') : 0;
+//            })
+//                ->sortable(),
+
+            Text::make('Prestige', 'prestige')
+                ->required(),
 
             BelongsTo::make('User', 'user', User::class),
+            HasMany::make('Fish Inventory', 'fish', FishInventory::class),
+            HasMany::make('Stats', 'stats'),
+            HasMany::make('Cooldowns', 'cooldowns'),
+
         ];
     }
 

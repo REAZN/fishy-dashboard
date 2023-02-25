@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
@@ -14,5 +13,20 @@ class Profile extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'userId');
+    }
+
+    public function stats()
+    {
+        return $this->hasMany(Stat::class, 'profileId');
+    }
+
+    public function cooldowns()
+    {
+        return $this->hasOne(Cooldown::class, 'profileId');
+    }
+
+    public function fish()
+    {
+        return $this->hasMany(FishInventory::class, "profileId", "id");
     }
 }

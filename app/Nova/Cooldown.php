@@ -24,7 +24,7 @@ class Cooldown extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'uuid';
 
     /**
      * The columns that should be searched.
@@ -50,12 +50,10 @@ class Cooldown extends Resource
                 ->sortable()
                 ->required(),
 
-
             Number::make('Streak', 'streak')
                 ->sortable()
                 ->textAlign('left')
                 ->required(),
-
 
             DateTime::make('Date', 'date')
                 ->displayUsing(fn ($value) => $value ? $value->format('D d/m/Y, g:ia') : '')
