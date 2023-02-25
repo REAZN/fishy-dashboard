@@ -2,21 +2,21 @@
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Profile extends Resource
+class ItemInventory extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Profile>
+     * @var class-string<\App\Models\ItemInventory>
      */
-    public static $model = \App\Models\Profile::class;
+    public static $model = \App\Models\ItemInventory::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -31,7 +31,7 @@ class Profile extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'userId', 'name', 'balance', 'xp',
+        'id',
     ];
 
     /**
@@ -43,41 +43,16 @@ class Profile extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            Text::make('Emoji', 'emoji')
+            BelongsTo::make('Profile', 'profile', Profile::class),
+
+            Text::make('Item ID', 'id')
+                ->sortable()
                 ->required(),
 
-            Text::make('Profile Name', 'name')
+            Number::make('Amount', 'amount')
+                ->sortable()
+                ->textAlign('left')
                 ->required(),
-
-            ID::make('Profile ID', 'id')->sortable(),
-
-//            Text::make('Balance', 'balance')
-//                ->sortable(),
-
-            Number::make('Balance', 'balance')
-                ->sortable(),
-
-            Number::make('XP', 'xp')
-                ->sortable(),
-
-//            Number::make('XP', 'xp', function () {
-//                return !is_null($this->xp) ? number_format($this->xp, 0, '.', ',') : 0;
-//            })
-//                ->sortable(),
-//        Number::make('XP', 'xp', function () {
-//                return !is_null($this->xp) ? number_format($this->xp, 0, '.', ',') : 0;
-//            })
-//                ->sortable(),
-
-            Text::make('Prestige', 'prestige')
-                ->required(),
-
-            BelongsTo::make('User', 'user', User::class),
-            HasMany::make('Fish Inventory', 'fish', FishInventory::class),
-            HasMany::make('Item Inventory', 'items', ItemInventory::class),
-            HasMany::make('Stats', 'stats'),
-            HasMany::make('Cooldowns', 'cooldowns'),
-
         ];
     }
 

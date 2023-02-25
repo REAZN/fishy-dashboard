@@ -29,4 +29,9 @@ class Profile extends Model
     {
         return $this->hasMany(FishInventory::class, "profileId", "id");
     }
+
+    public function items()
+    {
+        return $this->hasMany(ItemInventory::class, "profileId", "id");
+    }
 }
