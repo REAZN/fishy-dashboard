@@ -2,7 +2,13 @@
 
 namespace App\Providers;
 
+use App\Nova\Command;
+use App\Nova\Dashboards\Main;
+use App\Nova\Stat;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Menu\MenuItem;
+use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -16,6 +22,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        $this->getCustomMenu();
     }
 
     /**
@@ -76,5 +84,27 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function register()
     {
         //
+    }
+
+    private function getCustomMenu()
+    {
+        Nova::mainMenu(function (Request $request) {
+            return [
+                MenuSection::dashboard(Main::class)->icon('chart-bar'),
+
+                // TODO change to servers
+                MenuSection::resource(Command::class)->icon('server'),
+
+                MenuSection::make('Users', [
+                    MenuItem::make('All Users', '/resources/users'),
+                    MenuItem::make('Profiles', '/resources/profiles'),
+                    MenuItem::make('Stats', '/resources/stats'),
+                    MenuItem::make('Cooldowns', '/resources/cooldowns'),
+                    MenuItem::make('Fish Inventories', '/resources/fish-inventories'),
+                    MenuItem::make('Item Inventories', '/resources/item-inventories'),
+                ])->icon('user'),
+
+            ];
+        });
     }
 }
