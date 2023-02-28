@@ -11,6 +11,8 @@ class Stat extends Model
 
     protected $table = 'Stat';
 
+    protected $keyType = 'string';
+
     protected $casts = [
         'id' => 'string',
     ];

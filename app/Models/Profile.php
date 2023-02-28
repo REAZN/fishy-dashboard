@@ -10,6 +10,8 @@ class Profile extends Model
 
     protected $table = 'Profile';
 
+    protected $keyType = 'string';
+
     public function user()
     {
         return $this->belongsTo(User::class, 'userId');

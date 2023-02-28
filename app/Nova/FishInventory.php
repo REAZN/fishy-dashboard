@@ -49,6 +49,11 @@ class FishInventory extends Resource
                 ->sortable()
                 ->required(),
 
+            Number::make('Level', 'level')
+                ->sortable()
+                ->textAlign('left')
+                ->required(),
+
             Number::make('Amount', 'amount')
                 ->sortable()
                 ->textAlign('left')

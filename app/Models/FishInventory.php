@@ -11,6 +11,9 @@ class FishInventory extends Model
 
     protected $table = 'FishInventory';
 
+    protected $keyType = 'string';
+
+
     protected $casts = [
         'id' => 'string',
     ];

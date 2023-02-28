@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Color;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -24,6 +25,11 @@ class Profile extends Resource
      * @var string
      */
     public static $title = 'id';
+
+    public function subtitle()
+    {
+        return "Profile Owner: {$this->user->name} ({$this->user->id})";
+    }
 
     /**
      * The columns that should be searched.
@@ -50,6 +56,9 @@ class Profile extends Resource
                 ->required(),
 
             ID::make('Profile ID', 'id')->sortable(),
+
+            Color::make('Color', 'color')
+                ->required(),
 
 //            Text::make('Balance', 'balance')
 //                ->sortable(),

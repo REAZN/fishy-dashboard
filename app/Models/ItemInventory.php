@@ -11,6 +11,9 @@ class ItemInventory extends Model
 
     protected $table = 'ItemInventory';
 
+    protected $keyType = 'string';
+
+
     protected $casts = [
         'id' => 'string',
     ];

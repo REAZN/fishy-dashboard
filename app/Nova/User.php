@@ -29,6 +29,12 @@ class User extends Resource
      */
     public static $title = 'name';
 
+
+    public function subtitle()
+    {
+        return "Active Profile: {$this->activeProfile}";
+    }
+
     /**
      * The columns that should be searched.
      *
@@ -62,6 +68,7 @@ class User extends Resource
                 ->required(),
 
             Text::make('Active Profile', 'activeProfile'),
+
 
             Select::make('Rank', 'rank')
                 ->options([

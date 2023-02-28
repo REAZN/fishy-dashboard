@@ -24,7 +24,7 @@ class Cooldown extends Resource
      *
      * @var string
      */
-    public static $title = 'uuid';
+    public static $title = 'profileId';
 
     /**
      * The columns that should be searched.

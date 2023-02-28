@@ -11,6 +11,9 @@ class Cooldown extends Model
 
     protected $table = 'Cooldown';
 
+    protected $keyType = 'string';
+
+
     protected $casts = [
         'id' => 'string',
         'date' => 'datetime',
