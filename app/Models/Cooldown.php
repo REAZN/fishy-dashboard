@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Cooldown extends Model
 {
@@ -13,6 +12,7 @@ class Cooldown extends Model
 
     protected $keyType = 'string';
 
+    public $timestamps = false;
 
     protected $casts = [
         'id' => 'string',

@@ -2,12 +2,12 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Ramsey\Uuid\Uuid;
 
 class ItemInventory extends Resource
 {
@@ -44,6 +44,11 @@ class ItemInventory extends Resource
     {
         return [
             BelongsTo::make('Profile', 'profile', Profile::class),
+
+            Hidden::make('uuid', 'uuid')
+                ->default(function ($request) {
+                    return Uuid::uuid4();
+                }),
 
             Text::make('Item ID', 'id')
                 ->sortable()

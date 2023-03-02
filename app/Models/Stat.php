@@ -13,6 +13,8 @@ class Stat extends Model
 
     protected $keyType = 'string';
 
+    public $timestamps = false;
+
     protected $casts = [
         'id' => 'string',
     ];

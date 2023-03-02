@@ -49,6 +49,8 @@ class Profile extends Resource
     public function fields(NovaRequest $request)
     {
         return [
+            BelongsTo::make('User', 'user', User::class),
+
             Text::make('Emoji', 'emoji')
                 ->required(),
 
@@ -60,28 +62,33 @@ class Profile extends Resource
             Color::make('Color', 'color')
                 ->required(),
 
-//            Text::make('Balance', 'balance')
-//                ->sortable(),
-
             Number::make('Balance', 'balance')
-                ->sortable(),
+                ->sortable()
+                ->hideFromIndex()
+                ->hideFromDetail(),
 
             Number::make('XP', 'xp')
+                ->sortable()
+                ->hideFromIndex()
+                ->hideFromDetail(),
+
+            Text::make('Balance', 'balance', function () {
+                return !is_null($this->balance) ? '$' . number_format($this->balance, 0, '.', ',') : '$0';
+            })
+                ->sortable()
+                ->hideWhenUpdating()
+                ->hideWhenCreating(),
+
+            Text::make('XP', 'xp', function () {
+                return !is_null($this->xp) ? number_format($this->xp, 0, '.', ',') : 0;
+            })
+                ->sortable()
+                ->hideWhenUpdating()
+                ->hideWhenCreating(),
+
+            Number::make('Prestige', 'prestige')
                 ->sortable(),
 
-//            Number::make('XP', 'xp', function () {
-//                return !is_null($this->xp) ? number_format($this->xp, 0, '.', ',') : 0;
-//            })
-//                ->sortable(),
-//        Number::make('XP', 'xp', function () {
-//                return !is_null($this->xp) ? number_format($this->xp, 0, '.', ',') : 0;
-//            })
-//                ->sortable(),
-
-            Text::make('Prestige', 'prestige')
-                ->required(),
-
-            BelongsTo::make('User', 'user', User::class),
             HasMany::make('Fish Inventory', 'fish', FishInventory::class),
             HasMany::make('Item Inventory', 'items', ItemInventory::class),
             HasMany::make('Stats', 'stats'),
